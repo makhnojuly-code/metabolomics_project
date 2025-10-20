@@ -1,0 +1,16 @@
+.
+├── data
+│   ├── processed
+│   └── raw
+├── docs
+├── metabolomics_project.Rproj
+├── project_structure.txt
+├── quarto
+├── results
+└── scripts
+    ├── preprocessing
+    ├── shiny
+    ├── stats
+    └── viz
+
+11 directories, 2 files
