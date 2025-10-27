@@ -1,0 +1,37 @@
+Type of compound   | Compound name             | m/z      | RT (min) | Control | Treatment | Notes
+-------------------|---------------------------|----------|----------|---------|-----------|------------------------------
+Phenolic acid      | Chlorogenic acid          | 191      | 5–8      | +++     | +++       | major phenolic acid
+Phenolic acid      | Caffeic acid              | 179      | 5–8      | ++      | ++        | early RT, common
+Phenolic acid      | Ferulic acid              | 193      | 8–10     | ++      | +++       | stronger after wounding
+Phenolic acid      | Sinapic acid              | 223      | 8–11     | +       | ++        | medium signal
+Phenolic acid      | p-Coumaric acid           | 163      | 7–9      | +       | ++        | variable
+
+HCAA               | Feruloylputrescine        | 414      | 10–15    | –       | +++       | induced by wounding
+HCAA               | Coumaroylputrescine       | 370      | 10–15    | –       | +++       | defense marker
+HCAA               | Caffeoylputrescine        | 400      | 10–15    | –       | +++       | strong response
+HCAA               | Feruloylspermidine        | 580      | 10–15    | –       | ++        | may vary
+HCAA               | Caffeoylspermidine        | 560      | 10–15    | –       | ++        | may vary
+
+Hormone            | Salicylic acid (SA)       | 137      | 5–8      | +       | ++        | defense hormone
+Hormone            | Jasmonic acid (JA)        | 209      | 10–13    | –       | ++        | jasmonate pathway
+Hormone            | Abscisic acid (ABA)       | 263      | 10–14    | ±       | ±         | low intensity
+
+Flavonoid          | Quercetin-glucoside      | 463      | 10–16    | +       | ++        | secondary metabolite
+Flavonoid          | Kaempferol-glucoside     | 447      | 10–16    | +       | ++        | similar behavior
+Flavonoid          | Quercetin aglycone       | 301      | 10–16    | +       | ++        | lower signal
+
+Organic acid       | Citric acid              | 191      | 1–5      | ++      | ++        | early RT
+Organic acid       | Malic acid               | 133      | 1–5      | ++      | ++        | present in all
+Organic acid       | Succinic acid            | 117      | 1–5      | +       | +         | weak
+
+Lipid (LPC)        | LPC 17:1                 | 480–520  | 15–18    | –       | +         | late RT
+Lipid (LPC)        | LPC 18:2                 | 520–560  | 15–18    | –       | +         | late RT, weak signal
+
+
+Legend:
++++ = strong signal
+++ = medium
+
+= weak
+± = variable
+– = not detected or very low
