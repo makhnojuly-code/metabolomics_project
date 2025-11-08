@@ -2,3 +2,15 @@
 .Rhistory
 .RData
 .Ruserdata
+
+data/raw/*
+data/intermediate/*
+data/processed/*.csv
+*.rds
+*.RData
+*.Rhistory
+*.xlsx
+
+!data/raw/.gitkeep
+!data/intermediate/.gitkeep
+!data/processed/.gitkeep
