@@ -18,3 +18,7 @@ data/processed/*.csv
 results/**
 !results/.gitkeep
 !results/**/.gitkeep
+
+results/**
+!results/.gitkeep
+!results/**/.gitkeep
