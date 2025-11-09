@@ -22,3 +22,9 @@ results/**
 results/**
 !results/.gitkeep
 !results/**/.gitkeep
+
+# allow .gitkeep in results
+!results/
+!results/qc/
+!results/.gitkeep
+!results/**/.gitkeep
