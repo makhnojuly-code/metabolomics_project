@@ -15,3 +15,6 @@ data/processed/*.csv
 !data/intermediate/.gitkeep
 !data/processed/.gitkeep
 *:Zone.Identifier
+results/**
+!results/.gitkeep
+!results/**/.gitkeep
