@@ -15,6 +15,8 @@ dir.create(here::here("results","qc"),    recursive = TRUE, showWarnings = FALSE
 sample_sheet_neg <- a_neg %>%
   dplyr::mutate(
     file_name = basename(`Raw Spectral Data File`),
+    
+    file_name=sub("\\.d$", ".mzML", file_name, ignore.case = TRUE),
     sample_id = `Sample Name`,
     mode      = `Parameter Value[Scan polarity]`,
     type      = dplyr::case_when(
@@ -66,3 +68,30 @@ if (file.exists(xdata_path)) {
 } else {
   message(" Skipping xdata checks: data/intermediate/xdata_after_fill.rds not found (run preprocessing first).")
 }
+
+
+# Chek consistency with raw mzML files 
+neg_dir <- here::here("data","raw","neg_mode")
+
+# Raw files present on disk
+local <- list.files(neg_dir, pattern="\\.mzML$", full.names = FALSE, ignore.case = TRUE)
+
+# Expected from metadata
+ss <- readr::read_csv(here::here("data","metadata","sample_sheet_neg.csv"),
+                      show_col_types = FALSE)
+
+meta <- ss$file_name
+
+# Normalise case and trim spaces
+norm <- function(x) trimws(tolower(x))
+local_n <- norm(local)
+meta_n  <- norm(meta)
+
+cat("Total on disk:", length(local), "\n")
+cat("Total in metadata:", length(meta),  "\n")
+cat("Matched:", length(intersect(local_n, meta_n)), "\n")
+
+# If mismatch exists, show first 10 for diagnostics
+head(setdiff(local[match(local_n, local_n)], meta), 10)
+
+
