@@ -70,7 +70,7 @@ if (file.exists(xdata_path)) {
 }
 
 
-# Chek consistency with raw mzML files 
+# Check consistency with raw mzML files 
 neg_dir <- here::here("data","raw","neg_mode")
 
 # Raw files present on disk
