@@ -41,7 +41,7 @@ suppressWarnings({ ft[] <- lapply(ft, as.numeric) })
 # Remove technical samples 
 # Drop QC / blanks / pooled mixes by pattern
 # They are not biological samples and bias results.
-tech_pattern <- "(?i)MM8|QC|ACN"
+tech_pattern <- "(?i)MM8|QC|ACN|Blank"
 technical <- grep(tech_pattern, colnames(ft), value = TRUE)
 
 if (length(technical)) {
