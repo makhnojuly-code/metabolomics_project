@@ -89,9 +89,9 @@ meta_n  <- norm(meta)
 
 cat("Total on disk:", length(local), "\n")
 cat("Total in metadata:", length(meta),  "\n")
-cat("Matched:", length(intersect(local_n, meta_n)), "\n")
+cat("Matched:", length(S4Vectors::intersect(local_n, meta_n)), "\n")
 
 # If mismatch exists, show first 10 for diagnostics
-head(setdiff(local[match(local_n, local_n)], meta), 10)
+head( base::setdiff(local[match(local_n, local_n)], meta), 10)
 
 

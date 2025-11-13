@@ -5,7 +5,7 @@
 
 data/raw/*
 data/intermediate/*
-data/processed/*.csv
+!data/processed/*.csv
 *.rds
 *.RData
 *.Rhistory
