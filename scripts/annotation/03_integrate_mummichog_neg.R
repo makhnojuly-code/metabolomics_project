@@ -24,10 +24,10 @@ dir.create("results/annotation", recursive = TRUE, showWarnings = FALSE)
 # --- 1. Define file paths ---------------------------------------
 
 anno_path <- "results/annotation/annotation_candidates_neg.csv"
-mumm_path <- "results/annotation/mummichog_matched_compound_all.csv"
+mumm_path <- "results/annotation/mummicho_matched_compound_all.csv"
 
 out_full <- "results/annotation/features_with_mummichog_neg.csv"
-out_hits <- "results/annotation/mummichog_hits_neg.csv"
+out_hits <- "results/annotation/mummicho_hits_neg.csv"
 
 # --------------------------------------------------------------
 # 2. Load data
