@@ -157,40 +157,44 @@ if (nrow(incorrect_up) == 0 && nrow(incorrect_down) == 0) {
 report <- c(report, "")
 
 #########################
-# 8. Pathway assignment check (optional)
+# 8. stress_core_group check
 #########################
-# If later you add a column with pathways, you can rename this
-# logic. For now we check that the column exists before using it.
 
-if ("pathway_assignment" %in% names(core_metabolites)) {
+if ("stress_core_group" %in% names(core_metabolites)) {
   
-  all_paths <- core_metabolites$pathway_assignment
+  report <- c(report, "stress_core_group column detected.")
   
-  if (all(all_paths != "")) {
-    report <- c(report,
-                "pathway_assignment column exists and is filled.")
+  # basic NA check
+  if (any(is.na(core_metabolites$stress_core_group))) {
+    na_count <- sum(is.na(core_metabolites$stress_core_group))
+    report <- c(
+      report,
+      paste("There are", na_count, "metabolites with NA in stress_core_group.")
+    )
   } else {
-    report <- c(report,
-                "Empty values detected in pathway_assignment.")
+    report <- c(report, "No NA values in stress_core_group.")
   }
   
-  num_paths <- sapply(strsplit(all_paths, ";"), length)
+  # group distribution
+  grp_summary <- core_metabolites %>%
+    count(stress_core_group, name = "n_metabolites") %>%
+    arrange(desc(n_metabolites))
   
-  report <- c(report,
-              paste("Average pathways per metabolite:",
-                    round(mean(num_paths), 2)))
-  report <- c(report,
-              paste("Max pathways per metabolite:", max(num_paths)))
-  report <- c(report,
-              paste("Min pathways per metabolite:", min(num_paths)))
+  report <- c(report, "Distribution of core metabolites across stress_core_group:")
+  for (i in seq_len(nrow(grp_summary))) {
+    line <- paste0(
+      "  - ", grp_summary$stress_core_group[i], ": ",
+      grp_summary$n_metabolites[i], " metabolites"
+    )
+    report <- c(report, line)
+  }
+  
   report <- c(report, "")
   
 } else {
-  report <- c(report,
-              "Column 'pathway_assignment' not found (skipping pathway checks).")
+  report <- c(report, "Column 'stress_core_group' not found (skipping group checks).")
   report <- c(report, "")
 }
-
 #########################
 # 9. Save report
 #########################
