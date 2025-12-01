@@ -1,16 +1,29 @@
-.
-├── data
-│   ├── processed
-│   └── raw
-├── docs
-├── metabolomics_project.Rproj
-├── project_structure.txt
-├── quarto
-├── results
-└── scripts
-    ├── preprocessing
-    ├── shiny
-    ├── stats
-    └── viz
-
-11 directories, 2 files
+metabolomics_project/
+│
+├── data/
+│   ├── raw/                # raw mzML files (ignored in git, only .gitkeep)
+│   ├── intermediate/       # XCMS objects, temporary files (ignored)
+│   └── processed/          # cleaned & processed tables (CSV for stats/viz)
+│
+├── scripts/
+│   ├── preprocessing/      # LC–MS preprocessing (XCMS, QC, normalization)
+│   ├── stats/              # cleaning, limma, PCA, PLS-DA, outlier checks
+│   ├── annotation/         # building candidates, Mummichog, KEGG integration
+│   ├── viz/                # volcano, heatmaps, PLS-DA, post-annotation plots
+│   └── shiny/              # Shiny app for NEG-mode visualisation
+│
+├── results/
+│   ├── qc/                 # QC plots and summaries
+│   ├── stats/              # limma results, PLS-DA outputs
+│   ├── annotation/         # annotated metabolites, pathway tables
+│   ├── plots/              # final figures (PNG/PDF/HTML)
+│   └── viz_neg/            # specialised NEG-mode figures (heatmaps, chord, etc.)
+│
+├── tests/
+│   ├── testdata/           # small example CSV files for tests
+│   └── testthat/           # test-annotation.R and future tests
+│
+├── docs/                   # additional documentation (project notes etc.)
+├── quarto/                 # Quarto reports (analysis notebooks)
+├── LICENSE                 # MIT license
+└── README.md               # main project description
