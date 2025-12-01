@@ -2,6 +2,10 @@
 # visual_after_annotation_neg.R
 # NEG mode – visualisation after annotation
 ###############################################################
+# Run this script from the project root so that relative paths work:
+#  - data/processed/
+#  - results/annotation/
+#  - results/stress_core_neg/
 
 # Packages ---------------------------------------------------
 library(dplyr)
@@ -12,6 +16,7 @@ library(ggplot2)
 library(viridis)
 library(pheatmap)
 library(conflicted)
+
 
 library(ggrepel)    # pretty labels on volcano
 library(ggridges)   # ridgeplots
@@ -72,6 +77,7 @@ message("Loaded KEGG enrichment rows: ", nrow(enrich))
 ###############################################################
 # 1) Volcano plot
 ###############################################################
+
 # Volcano plot (NEG mode)
 # This figure shows how core metabolites change under stress.
 # Each point is one metabolite.
@@ -156,13 +162,14 @@ ggsave(
 ###############################################################
 # 2) KEGG bubble plot 
 ###############################################################
+
 # KEGG pathway enrichment (NEG mode)
 # This plot shows the top enriched KEGG pathways.
 # Rich factor = (number of significant metabolites) / (total metabolites in pathway).
 # Bubble size = number of significant metabolites.
 # Bubble colour = -log10(combined p-value).
 # Brighter colour means higher statistical significance.
-# Input data: mummichog_pathway_enrichment.csv
+# Input data: mummicho_pathway_enrichment.csv
 
 enrich_plot <- enrich %>%
   dplyr::filter(
@@ -229,6 +236,7 @@ ggsave(
 ###############################################################
 # 3) Heatmap: top significant annotated metabolites (NEG mode)
 ###############################################################
+
 # Heatmap helps to quickly see patterns in metabolite behavior across samples.
 # It shows which metabolites increase or decrease in each group and whether
 # samples cluster together based on similar metabolic profiles.
@@ -363,9 +371,9 @@ pheatmap(
 message("Saved heatmap PNG to: ", out_png)
 message("Saved heatmap PDF to: ", out_pdf)
 
-# # Figure: Heatmap of top significant metabolites (NEG mode).
-# # This heatmap displays the metabolites that change the most between the 
-# #Null and Wounding groups. Each row represents one metabolite 
+# Figure: Heatmap of top significant metabolites (NEG mode).
+# This heatmap displays the metabolites that change the most between the 
+# Null and Wounding groups. Each row represents one metabolite 
 # and each column represents one sample. Colors show Z-scored intensity values,
 # where red means higher levels, blue means lower levels, and white indicates average 
 # abundance. Because each metabolite is scaled separately, the heatmap clearly 
@@ -374,6 +382,7 @@ message("Saved heatmap PDF to: ", out_pdf)
 ###############################################################
 # 4) Boxplots for top 16 significant metabolites (NEG mode)
 ###############################################################
+
 # Boxplots of the most significant NEG metabolites.
 # Each panel (M1–M16) shows one metabolite.
 # Input:
@@ -393,7 +402,7 @@ if ("logFC" %in% names(core_features)) {
 } else if ("mean_logFC" %in% names(core_features)) {
   core_features$fc_val <- core_features$mean_logFC
 } else {
-  stop("Не нашла колонку с fold change (logFC / mean_logFC) в core_features.")
+  stop("Could not find a fold-change column (logFC / mean_logFC) in core_features.")
 }
 
 sig_core <- core_features %>% arrange(adj.P.Val)
@@ -569,6 +578,7 @@ message("PDF: ", pdf_file)
 ###############################################################
 # Mapping table for boxplot panels (M → metabolite)
 ###############################################################
+
 # This table links each boxplot panel (M1–M16) to the real metabolite.
 # For every M label we store: feature ID, annotation, log2 fold change
 # and adjusted p-value.
@@ -651,14 +661,16 @@ message("  Pretty PDF: ", pdf_file)
 # Here it shows how metabolites (Up or Down in stress) are linked to KEGG pathways.
 # This gives an overview of how many metabolites belong to each pathway
 # and how strongly each pathway participates in the stress response.
+# Input for chord diagrams:
+#   - mummichog_pathway_enrichment_integ.csv  (pathway ↔ metabolite hits)
+#   - mummicho_hits_neg.csv                   (logFC and regulation per metabolite)
 
-library(dplyr)
-library(tidyr)
-library(circlize)
-library(stringr)
+
 
 message("Preparing data for chord diagram (ALL pathways vs Up/Down)...")
 
+path_enrich <- read.csv("mummichog_pathway_enrichment_integ.csv")
+hits        <- read.csv("results/annotation/mummicho_hits_neg.csv")
 # --- 1) Pathway ↔ Empirical.Compound mapping -------------------------
 path_map <- path_enrich %>%
   select(Pathway = X, cpd.hits) %>%
@@ -782,17 +794,15 @@ message("  PDF: ", file.path(chord_dir, 'neg_chord_ALL_pathways_updown.pdf'))
 # for the focused chord plot.
 
 ###############################################################
-# 6) Chord diagram: main 10 pathways (P1–P10, Up/Down)
+# 6) Chord diagram: main 12 pathways (P1–P12, Up/Down)
 ###############################################################
-# Chord diagram of the 10 most important KEGG pathways.
+
+# Chord diagram of the 12 most important KEGG pathways.
 # Shows how metabolites from each pathway are Up or Down in stress.
-# P1–P10 = pathways, green/red = direction of regulation.
+# P1–P12 = pathways, green/red = direction of regulation.
 # Each ribbon connects a pathway to Up/Down.
 # Input files: pathway_enrichment_integ + hits_neg.
 
-setwd("/home/yuliia/metabolomics_project")  # если хочешь — можешь убрать позже
-
-# 0) папка для сохранения уже есть: chord_dir
 
 # 1) Load input data ---------------------------------------
 path_enrich <- read.csv("mummichog_pathway_enrichment_integ.csv")
@@ -952,8 +962,7 @@ plot_chord_main <- function() {
   )
 }
 
-# Preview in RStudio (опционально)
-# plot_chord_main()
+
 
 # Save PNG
 png(
@@ -975,7 +984,12 @@ pdf(
 plot_chord_main()
 dev.off()
 
-
+# This diagram shows how metabolites from 12 major KEGG pathways are regulated under stress.
+# Most pathways send many links to the Up-in-stress sector, showing a broad activation of lipid, 
+# carbohydrate and amino-acid metabolism.
+# The flavonoid and anthocyanin pathways also contribute several up-regulated
+# metabolites, indicating enhanced production of protective phenolic compounds during stress.
+# 
 
 message("Done. Figures saved under: ", viz_base)
 
